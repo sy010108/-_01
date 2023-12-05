@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" th:replace="~{base :: base(~{::head/content()}, ~{::title}, ~{::body/content()})}">
+<head>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/post_detail.css}">
+    
+    <script th:src="@{/js/post_detail.js}"></script>
+    
+    <title>커뮤니티 글 상세보기</title>
+</head>
+<body>
+	<div class="row">
+		<div class="col p-1" id="header-box">
+			<h1 class="text-center">커뮤니티 글 상세보기</h1>
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="col-10"></div>
+		<div class="col-2 button-box">
+			<button id="postlist" class="custom-btn btn-8">글 목록으로</button>
+		</div>
+	</div>
+		
+	<div class="row p-2">
+		<div class="col p-3 post border rounded">
+	        <div class="row">
+				<div class="col-4">
+					<h1 class="post-title" th:text="'제목: ' + ${post.title}"></h1>
+				</div>
+				<div class="col-7 p-1 post-info-box">
+					<p class="post-info" th:text="'작성자(ID): ' + ${post.nickname} + '(' + ${post.userid} + ') | 작성일시: ' + ${post.writeDateTime}"></p>
+				</div>
+				<div class="col-1">
+					<button class="delete-button btn btn-danger" id="postDelete">글 삭제</button>
+				</div>
+	        </div>
+	        
+	        <!-- <img class="post-image img-fluid rounded" src="이미지_경로_입력" alt="운동 이미지">  -->
+	        
+	        <div class="row">
+				<div class="col p-3">
+					<p class="post-content" th:text="${post.content}"></p>
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="col-10"></div>
+				<div class="col-2 page-count-box">
+					<p id="page-count" th:if="${commentlist.size()} != 0">댓글 페이지: [[${pages.number+1}]] / [[${pages.totalPages}]]</p>
+				</div>
+			</div>
+			
+			<div class="row p-2" th:each="comment:${commentlist}">
+				<div class="col comment">
+		            <div class="row comment-header">
+						<div class="col-8 p-2">
+							<p class="comment-writer" th:text="'작성자(ID): ' + ${comment.nickname} + '(' + ${comment.userid} + ')'"></p>
+						</div>
+						<div class="col-3 p-2 comment-info-box">
+							<p class="comment-timestamp" th:text="'작성일시: ' + ${comment.commentWriteTimestamp}"></p>
+						</div>
+		                <div class="col-1 p-1">
+							<button class="delete-comment-button btn btn-danger">댓글 삭제</button>
+						</div>
+		            </div>
+		            <div class="row commnet-content-box">
+						<div class="col p-2">
+							<p class="col comment-content" th:text="${comment.comment}"></p>
+						</div>
+					</div>
+	        	</div>
+	        	<input type="hidden" th:value="${comment.commentNum}">
+			</div>
+			
+			<ul class="page" th:if="${commentlist.size()} != 0">
+				<li>
+					<span th:if="${pages.first}">&lt;&lt;</span>
+					<a th:if="${not pages.first}" th:href="@{${url}(page=${pages.number - 1}, postNum=${param.postNum}, postListPage=${postListPage}, category=${postListCategory}, searchinput=${postListSearchInput})}">&lt;&lt;</a>
+				</li>
+				<th:block th:if="${pages.number} > 1 and ${pages.number} < ${pages.totalPages} - 3">
+					<li th:each="i:${#numbers.sequence(pages.number - 2, pages.number + 2)}">
+						<span th:if="${i} == ${pages.number}">[[${i+1}]]</span>
+						<a th:if="${i} != ${pages.number} and ${i} >= 0 and ${i} <= ${pages.totalPages} - 1" th:href="@{${url}(page=${i}, postNum=${param.postNum}, postListPage=${postListPage}, category=${postListCategory}, searchinput=${postListSearchInput})}">[[${i+1}]]</a>
+					</li>
+				</th:block>
+				<th:block th:if="${pages.number} <= 1">
+					<li th:each="i:${#numbers.sequence(0, 4)}">
+						<span th:if="${i} == ${pages.number}">[[${i+1}]]</span>
+						<a th:if="${i} != ${pages.number} and ${i} >= 0 and ${i} <= ${pages.totalPages} - 1" th:href="@{${url}(page=${i}, postNum=${param.postNum}, postListPage=${postListPage}, category=${postListCategory}, searchinput=${postListSearchInput})}">[[${i+1}]]</a>
+					</li>
+				</th:block>
+				<th:block th:if="${pages.number} >= ${pages.totalPages} - 3 and ${pages.totalPages} - 2 > 0 and ${pages.number} > 1">
+					<li th:each="i:${#numbers.sequence(pages.totalPages - 5, pages.totalPages - 1)}">
+						<span th:if="${i} == ${pages.number}">[[${i+1}]]</span>
+						<a th:if="${i} != ${pages.number} and ${i} >= 0 and ${i} <= ${pages.totalPages} - 1" th:href="@{${url}(page=${i}, postNum=${param.postNum}, postListPage=${postListPage}, category=${postListCategory}, searchinput=${postListSearchInput})}">[[${i+1}]]</a>
+					</li>
+				</th:block>
+				<li>
+					<span th:if="${pages.last}">&gt;&gt;</span>
+					<a th:if="${not pages.last}" th:href="@{${url}(page=${pages.number+1}, postNum=${param.postNum}, postListPage=${postListPage}, category=${postListCategory}, searchinput=${postListSearchInput})}">&gt;&gt;</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+	
+	<input type="hidden" th:value="${postListPage}" id="postListPage">
+	<input type="hidden" th:value="${postListCategory}" id="postListCategory">
+	<input type="hidden" th:value="${postListSearchInput}" id="postListSearchInput">
+	<input type="hidden" th:value="${post.postNum}" id="postNum">
+</body>
+</html>

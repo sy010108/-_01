@@ -1,0 +1,173 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f1f1f1;
+}
+
+.container-fluid {
+    width: 90%;
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.post {
+    border: 1px solid #ccc;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    background-color: #fff;
+}
+
+.post-title {
+	display: inline-block;
+	font-size: 30px;
+	margin: 0px;
+}
+
+.btn-8 {
+    line-height: 40px;
+    background: transparent;
+    color: #fff;
+    -webkit-perspective: 300px;
+    perspective: 300px;
+    -webkit-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+}
+
+.btn-8:hover{
+    color: #000;
+}
+
+.btn-8:after {
+    position: absolute;
+    content: "";
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    z-index: -1;
+    -webkit-transform-origin: center bottom;
+    transform-origin: center bottom;
+    -webkit-transform: rotateX(0);
+    transform: rotateX(0);
+    transition: all 0.3s ease;
+}
+
+.btn-8:hover:after {
+    -webkit-transform: rotateX(-180deg);
+    transform: rotateX(-180deg);
+}
+
+.post-info-box {
+	text-align: right;
+}
+
+.post-info {
+	font-size: 16px;
+	display: inline-block;
+	margin: 0px;
+}
+
+.delete-button {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.post-content {
+    font-size: 18px;
+    line-height: 1.6;
+    margin: 0px;
+}
+
+.comment {
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.comment-header {
+	margin: 0px;
+}
+
+.comment-info-box {
+	text-align: right;
+}
+
+.comment-writer {
+	margin: 0px;
+}
+
+.comment-timestamp {
+	margin: 0px;
+}
+
+.delete-comment-button {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 3px 8px;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+.commnet-content-box {
+	margin: 0px;
+}
+
+.comment-content {
+    font-size: 14px;
+    line-height: 1.4;
+    margin: 0px;
+}
+
+.page {
+    margin-top: 10px;
+    padding-left: 0px;
+    text-align: center;
+    font-size: 1rem;
+    list-style-type: none;
+}
+
+.page li {
+    display: inline-block;
+}
+
+.page.current, .page a {
+    padding: 0 3px;
+}
+
+.page a {
+    display: block;
+}
+
+#page-count {
+	margin-bottom: 0px;
+	display: inline-block;
+	font-size: 15px;
+}
+
+.page-count-box {
+	padding-left: 0px;
+	padding-right: 14px;
+	text-align: right;
+}
+
+.button-box {
+	padding-right: 14px;
+	text-align: right;
+}
+
+/* 추가된 스타일 */
+.post-image {
+    max-width: 100%;
+    display: block;
+    margin: 10px 0;
+}

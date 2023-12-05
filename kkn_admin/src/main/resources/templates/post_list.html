@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" th:replace="~{base :: base(~{::head/content()}, ~{::title}, ~{::body/content()})}">
+<head>
+	<link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+	
+	<link th:href="@{/css/post_list_management.css}" type="text/css" rel="stylesheet">
+	
+	<script th:src="@{/js/post_list.js}"></script>
+
+	<title>전체 </title>
+</head>
+<body>
+	<div class="row">
+		<div class="col-10"></div>
+		<div class="col-1 p-3">
+			<button id="memberlist" class="custom-btn btn-8">검색 초기화</button>
+		</div>
+		<div class="col-1 p-3">
+			<button id="home" class="custom-btn btn-8">홈</button>
+		</div>
+	</div>
+	
+	<div class="row" id="title">
+		<div class="col p-3">
+			<h1>전체 커뮤니티 글 목록</h1>
+		</div>
+	</div>
+	
+ 	<div class="row">
+		<div class="col-3"></div>
+		<div class="col-6 p-1">
+			<form th:action="@{/post/search}" method="get" id="search-form">
+				<select name="category" class="search-select" id="search-select">
+					<option th:if="${category} == 'userId' or ${category} == null" value="userId" selected>ID</option>
+					<option th:if="${category} != 'userId' and ${category} != null" value="userId">ID</option>
+					<option th:if="${category} == 'title'" value="title" selected>제목</option>
+					<option th:if="${category} != 'title'" value="title">제목</option>
+				</select>
+				<input th:if="${category} == 'userId' or ${category} == null" type="text" class="search-input" id="search-input" placeholder="ID 입력" name="searchinput" th:value="${searchInput}">
+				<input th:if="${category} == 'title'" type="text" class="search-input" id="search-input" placeholder="제목 입력" name="searchinput" th:value="${searchInput}">
+				<button type="submit" class="search-button">검색</button>
+			</form>
+			<p id="page-count">페이지: [[${pages.number+1}]] / [[${pages.totalPages}]]</p>
+		</div>
+		<div class="col-3"></div>
+	</div>
+	
+	<div class="row">
+		<div class="col-3"></div>
+		<div class="col-6 p-1">
+			<table>
+				<tr>
+					<th>글번호</th>
+					<th>제목</th>
+					<th>작성자(ID)</th>
+					<th>작성일시</th>
+				</tr>
+				<tr th:each="post:${postlist}">
+					<td th:text="${post['postNum']}"></td>
+					<td><a th:href="@{/post/detail(postNum=${post['postNum']}, postListPage=${pages.number}, category=${param.category}, searchinput=${param.searchinput})}" th:text="${post['title']}"></a></td>
+					<td th:text="${post['nickname']} + ' (' + ${post['userid']} + ')'"></td>
+					<td th:text="${post['writeTimestamp']}"></td>
+				</tr>
+			</table>
+		</div>
+		<div class="col-3"></div>
+	</div>
+	
+	<ul class="page">
+		<li>
+			<span th:if="${pages.first}">&lt;&lt;</span>
+			<a th:if="${not pages.first}" th:href="@{${url}(page=${pages.number - 1}, category=${param.category}, searchinput=${param.searchinput})}">&lt;&lt;</a>
+		</li>
+		<th:block th:if="${pages.number} > 1 and ${pages.number} < ${pages.totalPages} - 3">
+			<li th:each="i:${#numbers.sequence(pages.number - 2, pages.number + 2)}">
+				<span th:if="${i} == ${pages.number}">[[${i+1}]]</span>
+				<a th:if="${i} != ${pages.number} and ${i} >= 0 and ${i} <= ${pages.totalPages} - 1" th:href="@{${url}(page=${i}, category=${param.category}, searchinput=${param.searchinput})}">[[${i+1}]]</a>
+			</li>
+		</th:block>
+		<th:block th:if="${pages.number} <= 1">
+			<li th:each="i:${#numbers.sequence(0, 4)}">
+				<span th:if="${i} == ${pages.number}">[[${i+1}]]</span>
+				<a th:if="${i} != ${pages.number} and ${i} >= 0 and ${i} <= ${pages.totalPages} - 1" th:href="@{${url}(page=${i}, category=${param.category}, searchinput=${param.searchinput})}">[[${i+1}]]</a>
+			</li>
+		</th:block>
+		<th:block th:if="${pages.number} >= ${pages.totalPages} - 3 and ${pages.totalPages} - 2 > 0 and ${pages.number} > 1">
+			<li th:each="i:${#numbers.sequence(pages.totalPages - 5, pages.totalPages - 1)}">
+				<span th:if="${i} == ${pages.number}">[[${i+1}]]</span>
+				<a th:if="${i} != ${pages.number} and ${i} >= 0 and ${i} <= ${pages.totalPages} - 1" th:href="@{${url}(page=${i}, category=${param.category}, searchinput=${param.searchinput})}">[[${i+1}]]</a>
+			</li>
+		</th:block>
+		<li>
+			<span th:if="${pages.last}">&gt;&gt;</span>
+			<a th:if="${not pages.last}" th:href="@{${url}(page=${pages.number+1}, category=${param.category}, searchinput=${param.searchinput})}">&gt;&gt;</a>
+		</li>
+	</ul>
+</body>
+</html>

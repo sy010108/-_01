@@ -1,0 +1,16 @@
+@charset "UTF-8";
+
+.button-container {
+	display: flex;
+	justify-content: flex-end;
+}
+
+.features {
+	display: flex;
+	flex-wrap: wrap; /* 요소가 너비를 초과할 경우 자동으로 줄바꿈 */
+	display: 500px; /* 요소의 너비를 원하는 크기로 설정 */
+}
+
+#admin {
+	margin-right: 8px;
+}

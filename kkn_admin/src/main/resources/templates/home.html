@@ -1,0 +1,52 @@
+<!DOCTYPE HTML>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" th:href="@{css/home/main.css}">
+    <link rel="stylesheet" th:href="@{css/home/ie9.css}">
+    
+    <link th:href="@{css/home/home.css}" type="text/css" rel="stylesheet">
+    <title>caloriegram 관리자 Page</title>
+</head>
+<body>
+	<div class="button-container">
+		<ul class="actions">
+			<il id="admin">관리자: [[${name}]]</il>
+			<li><a th:href="@{/logout}" class="button special">로그아웃</a></li>
+		</ul>
+	</div>
+	
+	<!-- Banner -->
+	<section id="banner">
+	    <h2><strong>caloriegram 관리자 페이지</strong></h2><br>
+	</section>
+	
+	<!-- One -->
+	<section id="one" class="wrapper special">
+	    <div class="inner">
+	        <div class="features">
+	            <div class="feature">
+	                <i class="fa fa-diamond"></i>
+	                <h3>회원 관리</h3>
+	                <p></p>
+	                <a th:href="@{/member}"><button>GO!</button></a>
+	            </div>
+	            <div class="feature">
+	                <i class="fa fa-copy"></i>
+	                <h3>커뮤니티 관리</h3>
+	                <p></p>
+	                <a th:href="@{/post}"><button>GO!</button></a>
+	            </div>
+	        </div>
+	    </div>
+	</section>
+	
+	<!-- Scripts -->
+	<script th:src="@{js/home/jquery.min.js}"></script>
+	<script th:src="@{js/home/skel.min.js}"></script>
+	<script th:src="@{js/home/util.js}"></script>
+	<script th:src="@{js/home/main.js}"></script>
+	<script th:src="@{js/home/ie/html5shiv.js}"></script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link th:href="@{/css/login.css}" type="text/css" rel="stylesheet">
+	<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+	<title>관리자 로그인</title>
+</head>
+<body>
+	<div class="box">
+		<div class="container">
+			<div class="top">
+				<header>caloriegram 관리자 </header>
+			</div>
+			<div class="error" th:if="${param.error}">
+				<p>관리자 ID와 비밀번호를 다시 확인하세요.</p>
+			</div>
+			<form th:action="@{/login}" method="post">
+				<div class="input-field">
+					<input type="text" class="input" placeholder="ID" name="username" required>
+					<i class='bx bx-user' ></i>
+				</div>
+				<div class="input-field">
+					<input type="Password" class="input" placeholder="암호" name="password" required>
+					<i class='bx bx-lock-alt'></i>
+				</div>
+				<div class="input-field">
+					<input type="submit" class="submit" value="로그인">
+				</div>
+			</form>
+		</div>
+	</div>
+</body>
+</html>

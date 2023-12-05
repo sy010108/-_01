@@ -1,0 +1,21 @@
+spring:
+  datasource:
+    driverClassName: oracle.jdbc.driver.OracleDriver
+    url: jdbc:oracle:thin:@//localhost:1521/xepdb1
+    username: HEALTHCARE1
+    password: 1234
+
+server:
+  port: 8060
+
+logging:
+  level:
+    root: INFO
+    org:
+      hibernate:
+        type:
+          descriptor:
+            sql:
+              BasicBinder: trace
+          EnumType: trace
+        SQL: debug
